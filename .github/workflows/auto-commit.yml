@@ -36,7 +36,7 @@ jobs:
           # Cấu hình Git với thông tin tác giả tanbaycu
           git config --global user.name "tanbaycu"
           # Mẹo: Nên dùng email chính xác của tài khoản GitHub tanbaycu để được tính ô xanh (contribution)
-          git config --global user.email "tanbaycu@users.noreply.github.com"
+          git config --global user.email "mnew20128@gmail.com"
           
           git add LAST_UPDATED.txt
           

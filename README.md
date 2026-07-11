@@ -16,10 +16,10 @@ Dự án tự động hóa đóng góp (contributions) hàng ngày trên GitHub 
 ### Bước 1: Điều chỉnh Email GitHub của bạn
 Mở file [.github/workflows/auto-commit.yml](file:///C:/Users/ACER/Documents/antigravity/friendly-newton/.github/workflows/auto-commit.yml) và thay thế email:
 ```yaml
-git config --global user.email "tanbaycu@users.noreply.github.com"
+git config --global user.email "mnew20128@gmail.com"
 ```
 > [!IMPORTANT]
-> Thay `"tanbaycu@users.noreply.github.com"` bằng **email chính xác** liên kết với tài khoản GitHub **tanbaycu** của bạn. Nếu email này không khớp, GitHub sẽ không ghi nhận các commit này vào biểu đồ màu xanh (Contribution graph) của bạn.
+> Email của bạn đã được cấu hình tự động là `"mnew20128@gmail.com"`. Đây là email liên kết với tài khoản GitHub **tanbaycu** của bạn nên các commit sẽ được tính ô xanh một cách chính xác.
 
 ---
 
