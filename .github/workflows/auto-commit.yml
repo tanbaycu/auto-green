@@ -1,0 +1,49 @@
+name: Auto Commit - Daily Contribution Bot
+
+on:
+  schedule:
+    # Chạy mỗi ngày vào lúc 23:45 UTC (tức 06:45 sáng giờ Việt Nam)
+    - cron: '45 23 * * *'
+  workflow_dispatch: # Cho phép kích hoạt chạy thủ công qua giao diện GitHub Actions
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    # Yêu cầu quyền ghi (write) để đẩy code lên repo
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delay Ngẫu Nhiên (Giúp lịch sử commit tự nhiên)
+        # Chờ ngẫu nhiên từ 0 đến 45 phút (2700 giây) để thời gian commit thay đổi mỗi ngày, tránh bị phát hiện bot rập khuôn
+        run: |
+          DELAY=$((RANDOM % 2700))
+          echo "Đang chờ ngẫu nhiên trong $DELAY giây..."
+          sleep $DELAY
+
+      - name: Cập nhật File Log
+        run: |
+          echo "Last contribution check: $(date)" > LAST_UPDATED.txt
+          echo "Automated contribution update by tanbaycu" >> LAST_UPDATED.txt
+
+      - name: Commit và Push Thay Đổi
+        run: |
+          # Cấu hình Git với thông tin tác giả tanbaycu
+          git config --global user.name "tanbaycu"
+          # Mẹo: Nên dùng email chính xác của tài khoản GitHub tanbaycu để được tính ô xanh (contribution)
+          git config --global user.email "tanbaycu@users.noreply.github.com"
+          
+          git add LAST_UPDATED.txt
+          
+          # Chỉ commit nếu có thay đổi thực tế
+          if git diff --staged --quiet; then
+            echo "Không có thay đổi nào để commit."
+          else
+            git commit -m "chore: automated daily update by tanbaycu"
+            git push origin main
+          fi
