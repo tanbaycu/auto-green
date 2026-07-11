@@ -31,19 +31,21 @@ jobs:
           echo "Last contribution check: $(date)" > LAST_UPDATED.txt
           echo "Automated contribution update by tanbaycu" >> LAST_UPDATED.txt
 
-      - name: Commit và Push Thay Đổi
+      - name: Commit và Push Thay Đổi (Tạo đúng 27 commits)
         run: |
           # Cấu hình Git với thông tin tác giả tanbaycu
           git config --global user.name "tanbaycu"
-          # Mẹo: Nên dùng email chính xác của tài khoản GitHub tanbaycu để được tính ô xanh (contribution)
           git config --global user.email "mnew20128@gmail.com"
           
-          git add LAST_UPDATED.txt
+          # Vòng lặp tạo đúng 27 commit riêng biệt
+          for i in {1..27}
+          do
+            echo "Contribution $i of 27 - Timestamp: $(date)" > LAST_UPDATED.txt
+            git add LAST_UPDATED.txt
+            git commit -m "chore: automated daily update $i/27 by tanbaycu"
+            # Nghỉ 1 giây để thời gian các commit khác nhau một chút
+            sleep 1
+          done
           
-          # Chỉ commit nếu có thay đổi thực tế
-          if git diff --staged --quiet; then
-            echo "Không có thay đổi nào để commit."
-          else
-            git commit -m "chore: automated daily update by tanbaycu"
-            git push origin main
-          fi
+          # Đẩy toàn bộ 27 commits lên GitHub trong 1 lần push duy nhất
+          git push origin main
