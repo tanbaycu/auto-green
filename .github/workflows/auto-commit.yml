@@ -20,9 +20,9 @@ jobs:
           fetch-depth: 0
 
       - name: Delay Ngẫu Nhiên (Giúp lịch sử commit tự nhiên)
-        # Chờ ngẫu nhiên từ 0 đến 45 phút (2700 giây) để thời gian commit thay đổi mỗi ngày, tránh bị phát hiện bot rập khuôn
+        # Chờ ngẫu nhiên từ 0 đến 60 phút (3600 giây) để giờ chạy thay đổi liên tục mỗi ngày
         run: |
-          DELAY=$((RANDOM % 2700))
+          DELAY=$((RANDOM % 3600))
           echo "Đang chờ ngẫu nhiên trong $DELAY giây..."
           sleep $DELAY
 
@@ -31,21 +31,85 @@ jobs:
           echo "Last contribution check: $(date)" > LAST_UPDATED.txt
           echo "Automated contribution update by tanbaycu" >> LAST_UPDATED.txt
 
-      - name: Commit và Push Thay Đổi (Tạo đúng 27 commits)
+      - name: Commit và Push Thay Đổi (Ngẫu nhiên 27-50 commits với message linh hoạt)
         run: |
           # Cấu hình Git với thông tin tác giả tanbaycu
           git config --global user.name "tanbaycu"
           git config --global user.email "mnew20128@gmail.com"
           
-          # Vòng lặp tạo đúng 27 commit riêng biệt
-          for i in {1..27}
+          # Danh sách commit messages phong phú mô phỏng lập trình viên thực tế (50 câu)
+          MESSAGES=(
+            "feat: add dashboard analytics widget"
+            "fix: resolve memory leak in session handler"
+            "docs: update installation instructions"
+            "refactor: clean up user authentication service"
+            "style: improve mobile responsive navbar layout"
+            "test: add unit tests for data validation helper"
+            "chore: update dependencies version"
+            "perf: optimize image lazy loading behavior"
+            "fix: handle api response status codes properly"
+            "feat: implement dark mode toggle state"
+            "refactor: extract utility functions into helper module"
+            "docs: document api query parameters"
+            "style: refine button hover micro-interactions"
+            "chore: clean up unused assets and styles"
+            "feat: integrate email notification dispatch"
+            "fix: correct typo in form placeholder text"
+            "perf: accelerate database search index queries"
+            "test: cover edge case for empty cart submission"
+            "feat: support localization for Vietnamese language"
+            "fix: check for null values on api response payload"
+            "style: adjust padding on cards dashboard grid"
+            "refactor: transition user state management to Redux Toolkit"
+            "docs: add setup guide for Docker environment"
+            "chore: ignore build/ folder in gitignore"
+            "feat: add dynamic breadcrumbs component to project layout"
+            "fix: resolve layout shift on image loading state"
+            "perf: compression of static assets using Gzip compress"
+            "refactor: decouple configuration parameters from logic"
+            "feat: implement verify password strength indicator"
+            "fix: correct validation rules for phone number input"
+            "style: change color palette to modern slate theme"
+            "docs: create troubleshooting section for database connections"
+            "chore: setup ESLint and Prettier autoformat rules"
+            "feat: support social login integration with GitHub account"
+            "fix: handle timeout on external api provider"
+            "style: add subtle card hover box shadow animations"
+            "refactor: convert function components to functional Hooks"
+            "docs: update API endpoints docs with security guidelines"
+            "feat: introduce basic caching layer for fetch routes"
+            "fix: fix navigation stack resetting on reload error"
+            "perf: reduce main bundle size by code splitting routes"
+            "test: add integration test suite for checkout funnel"
+            "chore: clean up console log occurrences before staging"
+            "feat: build custom error boundary react fallback wrapper"
+            "fix: lock scrolling on background body element when modal active"
+            "style: make select inputs height match text input standard"
+            "refactor: replace inline style classes with layout utilities"
+            "docs: document release notes for release v1.2.0 payload"
+            "feat: support export user history reports to PDF format"
+            "fix: avoid duplicate form submissions through disable behavior"
+          )
+          
+          # Tính số lượng commit ngẫu nhiên từ 27 đến 50
+          NUM_COMMITS=$((RANDOM % (50 - 27 + 1) + 27))
+          echo "Hôm nay bot sẽ tạo $NUM_COMMITS commits."
+          
+          # Vòng lặp tạo commit
+          for ((i=1; i<=NUM_COMMITS; i++))
           do
-            echo "Contribution $i of 27 - Timestamp: $(date)" > LAST_UPDATED.txt
+            # Chọn ngẫu nhiên message từ danh sách
+            MSG_INDEX=$((RANDOM % ${#MESSAGES[@]}))
+            MSG=${MESSAGES[$MSG_INDEX]}
+            
+            echo "Contribution $i of $NUM_COMMITS - Msg: $MSG - Timestamp: $(date)" > LAST_UPDATED.txt
             git add LAST_UPDATED.txt
-            git commit -m "chore: automated daily update $i/27 by tanbaycu"
-            # Nghỉ 1 giây để thời gian các commit khác nhau một chút
-            sleep 1
+            git commit -m "$MSG"
+            
+            # Chờ ngẫu nhiên từ 1 đến 3 giây giữa các commit để timestamp tự nhiên
+            SLEEP_TIME=$((RANDOM % 3 + 1))
+            sleep $SLEEP_TIME
           done
           
-          # Đẩy toàn bộ 27 commits lên GitHub trong 1 lần push duy nhất
+          # Đẩy toàn bộ các commits lên GitHub
           git push origin main
