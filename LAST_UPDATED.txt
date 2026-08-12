@@ -1,1 +1,1 @@
-Contribution 28 of 44 - Msg: docs: document api query parameters - Timestamp: Wed Aug 12 01:14:14 UTC 2026
+Contribution 29 of 44 - Msg: fix: handle api response status codes properly - Timestamp: Wed Aug 12 01:14:15 UTC 2026
