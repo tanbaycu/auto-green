@@ -1,1 +1,1 @@
-Contribution 7 of 27 - Msg: refactor: extract utility functions into helper module - Timestamp: Sat Aug 29 04:24:26 UTC 2026
+Contribution 8 of 27 - Msg: docs: update installation instructions - Timestamp: Sat Aug 29 04:24:28 UTC 2026
