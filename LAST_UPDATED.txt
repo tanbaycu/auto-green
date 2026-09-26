@@ -1,1 +1,1 @@
-Contribution 15 of 44 - Msg: docs: document release notes for release v1.2.0 payload - Timestamp: Sat Sep 26 02:15:50 UTC 2026
+Contribution 16 of 44 - Msg: docs: update installation instructions - Timestamp: Sat Sep 26 02:15:51 UTC 2026
